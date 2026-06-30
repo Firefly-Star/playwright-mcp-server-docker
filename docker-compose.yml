@@ -1,0 +1,36 @@
+services:
+  playwright-mcp:
+    image: mcr.microsoft.com/playwright:v1.61.1-noble
+    container_name: playwright-mcp
+    restart: unless-stopped
+    ports:
+      - "8931:8931"
+    command:
+      - "npx"
+      - "-y"
+      - "@playwright/mcp"
+      - --no-sandbox
+      - --headless
+      - --host
+      - "0.0.0.0"
+      - --allowed-hosts
+      - "*"
+      - "--executable-path"
+      - "/ms-playwright/chromium-1228/chrome-linux64/chrome"
+      - "--proxy-server"
+      - "http://172.24.16.1:7890"
+      - "--user-agent"
+      - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+      - "--viewport-size"
+      - "1920x1080"
+      - "--port"
+      - "8931"
+    # 与 hermes-single 共用网络，以便 hermes 能访问 MCP
+    networks:
+      - hermes-single_default
+    # 如果 Chrome 需要共享内存，加大 shm_size
+    shm_size: 2gb
+
+networks:
+  hermes-single_default:
+    external: true
