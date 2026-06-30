@@ -28,13 +28,13 @@ services:
     # 共享截图目录，让宿主机和 hermes 能直接访问截图文件
     volumes:
       - /tmp/.playwright-mcp:/tmp/.playwright-mcp
-    # 定义独立网络，供 hermes-single 加入
+    # 定义 MCP 共享网络，所有 MCP 服务都在此
     networks:
-      - playwright-mcp-net
+      - mcp-net
     # 如果 Chrome 需要共享内存，加大 shm_size
     shm_size: 2gb
 
 networks:
-  playwright-mcp-net:
-    name: playwright-mcp-net
-    driver: bridge
+  mcp-net:
+    name: mcp-net
+    external: true
