@@ -3,8 +3,6 @@ services:
     image: mcr.microsoft.com/playwright:v1.61.1-noble
     container_name: playwright-mcp
     restart: unless-stopped
-    ports:
-      - "8931:8931"
     command:
       - "npx"
       - "-y"
