@@ -3,10 +3,8 @@ services:
     image: mcr.microsoft.com/playwright:v1.61.1-noble
     container_name: playwright-mcp
     restart: unless-stopped
+    entrypoint: ["/bin/bash", "/entrypoint.sh"]
     command:
-      - npx
-      - "-y"
-      - "@playwright/mcp"
       - --no-sandbox
       - --headless
       - --host
@@ -15,8 +13,6 @@ services:
       - "*"
       - --executable-path
       - /ms-playwright/chromium-1228/chrome-linux64/chrome
-      - --proxy-server
-      - http://172.24.16.1:7890
       - --user-agent
       - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
       - --viewport-size
@@ -26,6 +22,9 @@ services:
     # 共享截图目录，让宿主机和 hermes 能直接访问截图文件
     volumes:
       - /tmp/.playwright-mcp:/tmp/.playwright-mcp
+      - ./entrypoint.sh:/entrypoint.sh:ro
+    environment:
+      - PROXY_URL=${PROXY_URL:-}
     # 定义 MCP 共享网络，所有 MCP 服务都在此
     networks:
       - mcp-net
