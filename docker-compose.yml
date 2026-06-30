@@ -4,25 +4,25 @@ services:
     container_name: playwright-mcp
     restart: unless-stopped
     command:
-      - "npx"
+      - npx
       - "-y"
       - "@playwright/mcp"
       - --no-sandbox
       - --headless
       - --host
-      - "0.0.0.0"
+      - 0.0.0.0
       - --allowed-hosts
       - "*"
-      - "--executable-path"
-      - "/ms-playwright/chromium-1228/chrome-linux64/chrome"
-      - "--proxy-server"
-      - "http://172.24.16.1:7890"
-      - "--user-agent"
+      - --executable-path
+      - /ms-playwright/chromium-1228/chrome-linux64/chrome
+      - --proxy-server
+      - http://172.24.16.1:7890
+      - --user-agent
       - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-      - "--viewport-size"
-      - "1920x1080"
-      - "--port"
-      - "8931"
+      - --viewport-size
+      - 1920x1080
+      - --port
+      - 8931
     # 共享截图目录，让宿主机和 hermes 能直接访问截图文件
     volumes:
       - /tmp/.playwright-mcp:/tmp/.playwright-mcp
