@@ -22,7 +22,7 @@ services:
       - --viewport-size
       - 1920x1080
       - --port
-      - 8931
+      - "8931"
     # 共享截图目录，让宿主机和 hermes 能直接访问截图文件
     volumes:
       - /tmp/.playwright-mcp:/tmp/.playwright-mcp
